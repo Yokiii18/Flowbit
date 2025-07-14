@@ -16,7 +16,7 @@ Flowbit is a secure, multi-tenant ticket management platform with role-based acc
 
 ## ⚙️ Tech Stack
 - **Backend**: Node.js, Express.js, MongoDB, Mongoose
-- **Frontend**: (optional) React.js / HTML
+- **Frontend**: HTML
 - **Auth**: JWT
 - **Mail**: Nodemailer
 - **Docker**: MongoDB container

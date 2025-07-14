@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Register | Flowbit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+  <div class="w-full max-w-md bg-gray-800 p-8 rounded shadow-lg">
+    <h2 class="text-2xl mb-6 text-center font-bold">Register</h2>
+    <input type="email" id="email" placeholder="Email" class="input">
+    <input type="password" id="password" placeholder="Password" class="input">
+    <input type="text" id="customerId" placeholder="Customer ID" class="input">
+    <select id="role" class="input">
+      <option value="Customer">Customer</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <button onclick="register()" class="btn">Register</button>
+    <p class="text-sm mt-4">Already have an account? <a href="login.html" class="text-blue-400">Login</a></p>
+  </div>
+
+  <script>
+    async function register() {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+          customerId: document.getElementById("customerId").value,
+          role: document.getElementById("role").value,
+        })
+      });
+      const data = await res.json();
+      alert("Registered successfully. Now login.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <style>
+    .input { width: 100%; margin: 0.5rem 0; padding: 0.5rem; border-radius: 0.5rem; background: #2d3748; border: none; }
+    .btn { width: 100%; padding: 0.75rem; background: #4f46e5; border: none; border-radius: 0.5rem; font-weight: bold; }
+  </style>
+</body>
+</html>

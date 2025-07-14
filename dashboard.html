@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard | Flowbit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-10">
+  <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
+  <p id="welcomeMessage" class="text-lg mb-6">Loading...</p>
+  <button onclick="logout()" class="bg-red-500 px-4 py-2 rounded">Logout</button>
+
+  <script>
+    async function fetchDashboard() {
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+
+      if (!token) {
+        alert("Please login first.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const endpoint = role === "Admin" ? "/admin-data" : "/customer-data";
+      const res = await fetch(`http://localhost:5000/api/auth${endpoint}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        document.getElementById("welcomeMessage").innerText = data.message;
+      } else {
+        alert("Session expired. Please login again.");
+        logout();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.href = "login.html";
+    }
+
+    fetchDashboard();
+  </script>
+</body>
+</html>
